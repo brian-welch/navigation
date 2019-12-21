@@ -1,30 +1,61 @@
-const Board      = require('./models/board.js');
-const Player     = require('./models/player.js');
 const helper     = require('./helpers/helpers.js');
 const controller = require('./controllers/controllers.js');
 
-/*
- * Clear terminal window
- */
-helper.clearScreen();
+// check varaible
+let initCheck = false;
 
-/*
- * Display welcome message
- */
-helper.welcome();
+helper.enterHeaderMessage();
 
-let boardDimensions = [];
-let startPosition   = [];
+async function runNavigation(data) {
+  // kill command
+  let input = data.toString();
+  if (parseInt(input) === 0) {
+    process.exit();
+  }
 
+  // If objects have been instanstantiated, skip to 'else'
+  if (initCheck == false) {
+    if (!helper.isValidMatrix(input)) {
+      await helper.invalidMessage('header');
 
-  process.stdin.on('data', function(data){
-
-    boardDimensions.push(data.toString().trim());
-
-    if (boardDimensions.length < 2) {
-      helper.getBoardInputs(boardDimensions.length);
     } else {
-    }
-  });
+      initCheck = true;
+      global.boardObj  = await controller.createBoard(input);
+      global.playerObj = await controller.createPlayer(input);
 
-helper.getBoardInputs(0);
+      await helper.boardSetMessage(boardObj, playerObj);
+
+    }
+  // If objects have been instanstantiated, do this
+  } else {
+    if (!helper.isValidCommand(input)) {
+      await helper.invalidMessage('command');
+
+    } else {
+      await controller.runCommands(input, boardObj, playerObj);
+    }
+  }
+
+
+}
+
+// Initiate input listener
+process.stdin.on('data', runNavigation);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
