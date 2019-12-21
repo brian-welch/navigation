@@ -75,11 +75,13 @@ function runCommands(string, boardObj, playerObj){
 
 
 function outputResult (array) {
-  process.stdout.write(`\n[${array}]`);
   if (array[0] < 0) {
+    process.stdout.write('\n\nPlayer fell off the board.\n');
+    process.stdout.write(`\n[${array}]\n`);
     process.exit();
   } else {
-    process.stdout.write('\n\nPlayer remains on the board\n  >>> ');
+    process.stdout.write(`\n\n[${array}]\n`);
+    process.stdout.write('\nPlayer remains on the board\n  >>> ');
   }
 }
 
