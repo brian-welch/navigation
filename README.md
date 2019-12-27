@@ -4,4 +4,4 @@
 
 ## To test
 <p>Have Node.JS installed in a directory and save this entire project to the directory.</p>
-<p>funning the command <code>node navigation</code> will begin the app.</p>
+<p>Running the command <code>node navigation</code> will begin the app.</p>
